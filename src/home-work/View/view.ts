@@ -10,6 +10,7 @@
 */
 
 ///<reference path='../Seno/seno.ts'/>
+///<reference path='../Coseno/coseno.ts'/>
 
 /** 
  * @classdesc A class to represent multiple figures
@@ -78,6 +79,11 @@ class View {
 
   dibujaSeno() {
     const funcionSeno = new Seno();
+    funcionSeno.representarFuncion(this.canvas, this.context);
+  }
+
+  dibujaCoseno() {
+    const funcionSeno = new Coseno();
     funcionSeno.representarFuncion(this.canvas, this.context);
   }
   

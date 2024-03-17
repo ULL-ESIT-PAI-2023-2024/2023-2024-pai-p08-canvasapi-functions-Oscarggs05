@@ -60,7 +60,7 @@ var Seno = /** @class */ (function (_super) {
     function Seno(amplitud, periodo, desfase) {
         if (amplitud === void 0) { amplitud = 1; }
         if (periodo === void 0) { periodo = 2 * Math.PI; }
-        if (desfase === void 0) { desfase = 0; }
+        if (desfase === void 0) { desfase = 1; }
         var _this = _super.call(this) || this;
         _this.amplitud = amplitud;
         _this.periodo = periodo;
@@ -103,32 +103,22 @@ var Seno = /** @class */ (function (_super) {
      * Devuelve una representación gráfica de la función seno.
      */
     Seno.prototype.representarFuncion = function (canvas, context) {
-        // Definir el rango del eje X
-        var xMin = -this.periodo / 2 + this.desfase;
-        var xMax = this.periodo / 2 + this.desfase;
-        // Definir el paso para dibujar puntos
-        var paso = 0.1;
+        var width = canvas.width;
+        var height = canvas.height;
+        var scaleX = 100 / (2 * Math.PI); // Escala para ajustar el periodo al ancho del canvas
+        var scaleY = 100 / 2; // Escala para ajustar la amplitud al alto del canvas
         context.beginPath();
-        context.strokeStyle = 'black';
-        for (var x = xMin; x <= xMax; x += paso) {
-            var y = this.amplitud * Math.sin((2 * Math.PI / this.periodo) * (x - this.desfase));
-            var canvasX = (x - xMin) / (xMax - xMin) * canvas.width;
-            var canvasY = canvas.height / 2 - y; // Invertir la coordenada Y para que el origen esté arriba
-            if (x === xMin) {
-                context.moveTo(canvasX, canvasY);
+        for (var x = 0; x <= width; x++) {
+            var valorX = x / scaleX + this.desfase; // Valor x escalado con el desfase
+            var valorY = this.evaluar(valorX) * scaleY + height / 2; // Valor y escalado con la amplitud y desplazado al centro vertical del canvas
+            if (x === 0) {
+                context.moveTo(x, valorY);
             }
             else {
-                context.lineTo(canvasX, canvasY);
+                context.lineTo(x, valorY);
             }
         }
         context.stroke();
-        context.save();
-        context.fillStyle = 'black';
-        context.beginPath();
-        context.rect(40, 60, 100, 100);
-        context.fill();
-        context.stroke();
-        context.restore();
     };
     return Seno;
 }(Funciones));
@@ -142,7 +132,97 @@ var Seno = /** @class */ (function (_super) {
  * @since March 29 2022
  * @desc funcionamiento con la clase main
 */
+///<reference path='../Funciones/funciones.ts'/>
+///<reference path='../View/view.ts'/>
+/**
+ * Clase que representa a la función del cos(x)
+ */
+var Coseno = /** @class */ (function (_super) {
+    __extends(Coseno, _super);
+    /**
+     * Constructor de la clase `Coseno`.
+     *
+     * @param {number} amplitud - Amplitud de la función coseno.
+     * @param {number} periodo - Periodo de la función coseno.
+     * @param {number} desfase - Desfase horizontal de la función coseno.
+    */
+    function Coseno(amplitud, periodo, desfase) {
+        if (amplitud === void 0) { amplitud = 1; }
+        if (periodo === void 0) { periodo = 2 * Math.PI; }
+        if (desfase === void 0) { desfase = 1; }
+        var _this = _super.call(this) || this;
+        _this.amplitud = amplitud;
+        _this.periodo = periodo;
+        _this.desfase = desfase;
+        _this.amplitud = amplitud;
+        _this.periodo = periodo;
+        _this.desfase = desfase;
+        return _this;
+    }
+    /**
+    * Devuelve la amplitud de la función coseno.
+    * @returns {number} - Amplitud de la función coseno.
+    */
+    Coseno.prototype.getAmplitud = function () {
+        return this.amplitud;
+    };
+    /**
+     * Devuelve el periodo de la función coseno.
+     * @returns {number} - Periodo de la función coseno.
+     */
+    Coseno.prototype.getPeriodo = function () {
+        return this.periodo;
+    };
+    /**
+     * Devuelve el desfase horizontal de la función coseno.
+     * @returns {number} - Desfase horizontal de la función coseno.
+     */
+    Coseno.prototype.getDesfase = function () {
+        return this.desfase;
+    };
+    /**
+     * Evalúa la función coseno en un valor x específico.
+     * @param {number} x - Valor de entrada para la función coseno.
+     * @returns {number} - Valor de la función coseno en el punto x.
+     */
+    Coseno.prototype.evaluar = function (valorIntroducido) {
+        return this.amplitud * Math.cos(2 * Math.PI * (valorIntroducido - this.desfase) / this.periodo);
+    };
+    /**
+     * Devuelve una representación gráfica de la función coseno.
+     */
+    Coseno.prototype.representarFuncion = function (canvas, context) {
+        var width = canvas.width;
+        var height = canvas.height;
+        var scaleX = 100 / (2 * Math.PI); // Escala para ajustar el periodo al ancho del canvas
+        var scaleY = 100 / 2; // Escala para ajustar la amplitud al alto del canvas
+        context.beginPath();
+        for (var x = 0; x <= width; x++) {
+            var valorX = x / scaleX + this.desfase; // Valor x escalado con el desfase
+            var valorY = this.evaluar(valorX) * scaleY + height / 2; // Valor y escalado con la amplitud y desplazado al centro vertical del canvas
+            if (x === 0) {
+                context.moveTo(x, valorY);
+            }
+            else {
+                context.lineTo(x, valorY);
+            }
+        }
+        context.stroke();
+    };
+    return Coseno;
+}(Funciones));
+/**
+ * Universidad de La Laguna
+ * Escuela Superior de Ingeniería y Tecnología
+ * Grado en Ingeniería Informática
+ * Programación de Aplicaciones Interactivas
+ *
+ * @author Oscar Garcia Gonzalez
+ * @since March 29 2022
+ * @desc funcionamiento con la clase main
+*/
 ///<reference path='../Seno/seno.ts'/>
+///<reference path='../Coseno/coseno.ts'/>
 /**
  * @classdesc A class to represent multiple figures
  */
@@ -202,6 +282,10 @@ var View = /** @class */ (function () {
     };
     View.prototype.dibujaSeno = function () {
         var funcionSeno = new Seno();
+        funcionSeno.representarFuncion(this.canvas, this.context);
+    };
+    View.prototype.dibujaCoseno = function () {
+        var funcionSeno = new Coseno();
         funcionSeno.representarFuncion(this.canvas, this.context);
     };
     return View;

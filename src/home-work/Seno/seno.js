@@ -40,7 +40,7 @@ var Seno = /** @class */ (function (_super) {
     function Seno(amplitud, periodo, desfase) {
         if (amplitud === void 0) { amplitud = 1; }
         if (periodo === void 0) { periodo = 2 * Math.PI; }
-        if (desfase === void 0) { desfase = 0; }
+        if (desfase === void 0) { desfase = 1; }
         var _this = _super.call(this) || this;
         _this.amplitud = amplitud;
         _this.periodo = periodo;
@@ -83,22 +83,21 @@ var Seno = /** @class */ (function (_super) {
      * Devuelve una representación gráfica de la función seno.
      */
     Seno.prototype.representarFuncion = function (canvas, context) {
-        // Definir el rango del eje X
-        var xMin = -this.periodo / 2 + this.desfase;
-        var xMax = this.periodo / 2 + this.desfase;
-        // Definir el paso para dibujar puntos
-        var paso = 0.1;
+        // ---------------------------------- Corregir --------------------------------------
+        var scaleX = 2;
+        var scaleY = 50;
+        var desfase = this.desfase * Math.PI / 2;
         context.beginPath();
-        context.strokeStyle = 'black';
-        for (var x = xMin; x <= xMax; x += paso) {
-            var y = this.amplitud * Math.sin((2 * Math.PI / this.periodo) * (x - this.desfase));
-            var canvasX = (x - xMin) / (xMax - xMin) * canvas.width;
-            var canvasY = canvas.height / 2 - y; // Invertir la coordenada Y para que el origen esté arriba
-            if (x === xMin) {
-                context.moveTo(canvasX, canvasY);
+        context.strokeStyle = 'blue';
+        context.lineWidth = 2;
+        for (var x = 0; x < canvas.width; x++) {
+            var radians = (x / canvas.width) * this.periodo * 2 * Math.PI * scaleX;
+            var y = canvas.height / 2 - this.amplitud * Math.sin(radians + desfase) * scaleY;
+            if (x === 0) {
+                context.moveTo(x, y);
             }
             else {
-                context.lineTo(canvasX, canvasY);
+                context.lineTo(x, y);
             }
         }
         context.stroke();

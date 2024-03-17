@@ -12,16 +12,16 @@
 ///<reference path='../View/view.ts'/>
 
 /**
- * Clase que representa a la funcion del sen(x)
+ * Clase que representa a la función del cos(x)
  */
-class Seno extends Funciones {
+class Coseno extends Funciones {
   
   /**
-   * Constructor de la clase `Seno`.
+   * Constructor de la clase `Coseno`.
    *
-   * @param {number} amplitud - Amplitud de la función seno.
-   * @param {number} periodo - Periodo de la función seno.
-   * @param {number} desfase - Desfase horizontal de la función seno.
+   * @param {number} amplitud - Amplitud de la función coseno.
+   * @param {number} periodo - Periodo de la función coseno.
+   * @param {number} desfase - Desfase horizontal de la función coseno.
   */
   constructor(private amplitud: number = 1, private periodo: number = 2 * Math.PI, private desfase: number = 1) {
     super();
@@ -31,16 +31,16 @@ class Seno extends Funciones {
   }
 
   /**
-  * Devuelve la amplitud de la función seno.
-  * @returns {number} - Amplitud de la función seno.
+  * Devuelve la amplitud de la función coseno.
+  * @returns {number} - Amplitud de la función coseno.
   */
   getAmplitud() {
     return this.amplitud;
   }
 
   /**
-   * Devuelve el periodo de la función seno.
-   * @returns {number} - Periodo de la función seno.
+   * Devuelve el periodo de la función coseno.
+   * @returns {number} - Periodo de la función coseno.
    */
   getPeriodo() {
     return this.periodo;
@@ -48,24 +48,24 @@ class Seno extends Funciones {
 
 
   /**
-   * Devuelve el desfase horizontal de la función seno.
-   * @returns {number} - Desfase horizontal de la función seno.
+   * Devuelve el desfase horizontal de la función coseno.
+   * @returns {number} - Desfase horizontal de la función coseno.
    */
   getDesfase() {
     return this.desfase;
   }
 
   /**
-   * Evalúa la función seno en un valor x específico.
-   * @param {number} x - Valor de entrada para la función seno.
-   * @returns {number} - Valor de la función seno en el punto x.
+   * Evalúa la función coseno en un valor x específico.
+   * @param {number} x - Valor de entrada para la función coseno.
+   * @returns {number} - Valor de la función coseno en el punto x.
    */
   evaluar(valorIntroducido: number) {
-    return this.amplitud * Math.sin(2 * Math.PI * (valorIntroducido - this.desfase) / this.periodo);
+    return this.amplitud * Math.cos(2 * Math.PI * (valorIntroducido - this.desfase) / this.periodo);
   }
 
   /**
-   * Devuelve una representación gráfica de la función seno.
+   * Devuelve una representación gráfica de la función coseno.
    */
   representarFuncion(canvas: HTMLCanvasElement, context: CanvasRenderingContext2D) {
     const width = canvas.width;
@@ -85,9 +85,4 @@ class Seno extends Funciones {
     }
     context.stroke();
   }
-
- 
-
-
-
 }

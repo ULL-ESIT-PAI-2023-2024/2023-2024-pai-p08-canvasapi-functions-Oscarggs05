@@ -1,0 +1,16 @@
+body {
+	font-family: sans-serif;
+	text-align: center;
+	background-color: burlywood;
+}
+
+h1 {
+	font-size: 2rem;
+	font-weight: bolder;
+	margin-bottom: 1rem;
+}
+
+p {
+	margin-bottom: 1rem;
+	color: red;
+}

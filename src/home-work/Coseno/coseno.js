@@ -26,18 +26,18 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 /**
- * Clase que representa a la funcion del sen(x)
+ * Clase que representa a la función del cos(x)
  */
-var Seno = /** @class */ (function (_super) {
-    __extends(Seno, _super);
+var Coseno = /** @class */ (function (_super) {
+    __extends(Coseno, _super);
     /**
-     * Constructor de la clase `Seno`.
+     * Constructor de la clase `Coseno`.
      *
-     * @param {number} amplitud - Amplitud de la función seno.
-     * @param {number} periodo - Periodo de la función seno.
-     * @param {number} desfase - Desfase horizontal de la función seno.
+     * @param {number} amplitud - Amplitud de la función coseno.
+     * @param {number} periodo - Periodo de la función coseno.
+     * @param {number} desfase - Desfase horizontal de la función coseno.
     */
-    function Seno(amplitud, periodo, desfase) {
+    function Coseno(amplitud, periodo, desfase) {
         if (amplitud === void 0) { amplitud = 1; }
         if (periodo === void 0) { periodo = 2 * Math.PI; }
         if (desfase === void 0) { desfase = 1; }
@@ -51,38 +51,38 @@ var Seno = /** @class */ (function (_super) {
         return _this;
     }
     /**
-    * Devuelve la amplitud de la función seno.
-    * @returns {number} - Amplitud de la función seno.
+    * Devuelve la amplitud de la función coseno.
+    * @returns {number} - Amplitud de la función coseno.
     */
-    Seno.prototype.getAmplitud = function () {
+    Coseno.prototype.getAmplitud = function () {
         return this.amplitud;
     };
     /**
-     * Devuelve el periodo de la función seno.
-     * @returns {number} - Periodo de la función seno.
+     * Devuelve el periodo de la función coseno.
+     * @returns {number} - Periodo de la función coseno.
      */
-    Seno.prototype.getPeriodo = function () {
+    Coseno.prototype.getPeriodo = function () {
         return this.periodo;
     };
     /**
-     * Devuelve el desfase horizontal de la función seno.
-     * @returns {number} - Desfase horizontal de la función seno.
+     * Devuelve el desfase horizontal de la función coseno.
+     * @returns {number} - Desfase horizontal de la función coseno.
      */
-    Seno.prototype.getDesfase = function () {
+    Coseno.prototype.getDesfase = function () {
         return this.desfase;
     };
     /**
-     * Evalúa la función seno en un valor x específico.
-     * @param {number} x - Valor de entrada para la función seno.
-     * @returns {number} - Valor de la función seno en el punto x.
+     * Evalúa la función coseno en un valor x específico.
+     * @param {number} x - Valor de entrada para la función coseno.
+     * @returns {number} - Valor de la función coseno en el punto x.
      */
-    Seno.prototype.evaluar = function (valorIntroducido) {
-        return this.amplitud * Math.sin(2 * Math.PI * (valorIntroducido - this.desfase) / this.periodo);
+    Coseno.prototype.evaluar = function (valorIntroducido) {
+        return this.amplitud * Math.cos(2 * Math.PI * (valorIntroducido - this.desfase) / this.periodo);
     };
     /**
-     * Devuelve una representación gráfica de la función seno.
+     * Devuelve una representación gráfica de la función coseno.
      */
-    Seno.prototype.representarFuncion = function (canvas, context) {
+    Coseno.prototype.representarFuncion = function (canvas, context) {
         var width = canvas.width;
         var height = canvas.height;
         var scaleX = 100 / (2 * Math.PI); // Escala para ajustar el periodo al ancho del canvas
@@ -100,5 +100,5 @@ var Seno = /** @class */ (function (_super) {
         }
         context.stroke();
     };
-    return Seno;
+    return Coseno;
 }(Funciones));

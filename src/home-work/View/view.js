@@ -221,8 +221,100 @@ var Coseno = /** @class */ (function (_super) {
  * @since March 29 2022
  * @desc funcionamiento con la clase main
 */
+///<reference path='../Funciones/funciones.ts'/>
+///<reference path='../View/view.ts'/>
+/**
+ * Clase que representa a la función exponencial
+ */
+var Exponencial = /** @class */ (function (_super) {
+    __extends(Exponencial, _super);
+    /**
+     * Constructor de la clase `Exponencial`.
+     *
+     * @param {number} amplitud - Amplitud de la función exponencial.
+     * @param {number} base - Base de la función exponencial.
+     * @param {number} desfase - Desfase horizontal de la función exponencial.
+    */
+    function Exponencial(amplitud, base, desfase) {
+        if (amplitud === void 0) { amplitud = 1; }
+        if (base === void 0) { base = Math.E; }
+        if (desfase === void 0) { desfase = 0; }
+        var _this = _super.call(this) || this;
+        _this.amplitud = amplitud;
+        _this.base = base;
+        _this.desfase = desfase;
+        _this.amplitud = amplitud;
+        _this.base = base;
+        _this.desfase = desfase;
+        return _this;
+    }
+    /**
+    * Devuelve la amplitud de la función exponencial.
+    * @returns {number} - Amplitud de la función exponencial.
+    */
+    Exponencial.prototype.getAmplitud = function () {
+        return this.amplitud;
+    };
+    /**
+     * Devuelve la base de la función exponencial.
+     * @returns {number} - Base de la función exponencial.
+     */
+    Exponencial.prototype.getBase = function () {
+        return this.base;
+    };
+    /**
+     * Devuelve el desfase horizontal de la función exponencial.
+     * @returns {number} - Desfase horizontal de la función exponencial.
+     */
+    Exponencial.prototype.getDesfase = function () {
+        return this.desfase;
+    };
+    /**
+     * Evalúa la función exponencial en un valor x específico.
+     * @param {number} x - Valor de entrada para la función exponencial.
+     * @returns {number} - Valor de la función exponencial en el punto x.
+     */
+    Exponencial.prototype.evaluar = function (valorIntroducido) {
+        return this.amplitud * Math.pow(this.base, valorIntroducido - this.desfase);
+    };
+    /**
+     * Devuelve una representación gráfica de la función exponencial.
+     */
+    Exponencial.prototype.representarFuncion = function (canvas, context) {
+        var width = canvas.width;
+        var height = canvas.height;
+        var scaleX = 50; // Escala para ajustar el ancho del canvas
+        var scaleY = 50; // Escala para ajustar la altura del canvas
+        context.beginPath();
+        // Calculamos la coordenada x del centro del lienzo
+        var centroX = width / 2;
+        for (var x = 0; x <= width; x++) {
+            var valorX = (x - centroX) / scaleX + this.desfase; // Valor x escalado y ajustado al centro
+            var valorY = height / 2 - this.evaluar(valorX) * scaleY; // Valor y escalado e invertido
+            if (x === 0) {
+                context.moveTo(x, valorY);
+            }
+            else {
+                context.lineTo(x, valorY);
+            }
+        }
+        context.stroke();
+    };
+    return Exponencial;
+}(Funciones));
+/**
+ * Universidad de La Laguna
+ * Escuela Superior de Ingeniería y Tecnología
+ * Grado en Ingeniería Informática
+ * Programación de Aplicaciones Interactivas
+ *
+ * @author Oscar Garcia Gonzalez
+ * @since March 29 2022
+ * @desc funcionamiento con la clase main
+*/
 ///<reference path='../Seno/seno.ts'/>
 ///<reference path='../Coseno/coseno.ts'/>
+///<reference path='../Exponencial/exponencial.ts'/>
 /**
  * @classdesc A class to represent multiple figures
  */
@@ -249,6 +341,7 @@ var View = /** @class */ (function () {
         var numTicksX = 50;
         var numTicksY = 20;
         var LONGITUD_LINEA = 5;
+        var TEXT_OFFSET = 8;
         // Limpia
         this.context.fillStyle = 'white';
         this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
@@ -266,18 +359,26 @@ var View = /** @class */ (function () {
         // Rayas en el eje X
         for (var i = 0; i < numTicksX; i++) {
             var tickX = origenX + (i - numTicksX / 2) * escalaX;
+            var valueX = (i - numTicksX / 2);
             this.context.beginPath();
             this.context.moveTo(tickX, origenY - LONGITUD_LINEA);
             this.context.lineTo(tickX, origenY + LONGITUD_LINEA);
             this.context.stroke();
+            this.context.font = "10px Arial";
+            this.context.fillStyle = "black";
+            this.context.fillText(valueX.toString(), tickX - 3, origenY + 20);
         }
         // Rayas en el eje Y
         for (var i = 0; i < numTicksY; i++) {
             var tickY = origenY + (i - numTicksY / 2) * escalaY;
+            var valueY = (numTicksY / 2 - i);
             this.context.beginPath();
             this.context.moveTo(origenX - LONGITUD_LINEA, tickY);
             this.context.lineTo(origenX + LONGITUD_LINEA, tickY);
             this.context.stroke();
+            this.context.font = "10px Arial";
+            this.context.fillStyle = "black";
+            this.context.fillText(valueY.toString(), origenX - TEXT_OFFSET * 2, tickY + TEXT_OFFSET / 2);
         }
     };
     View.prototype.dibujaSeno = function () {
@@ -285,14 +386,18 @@ var View = /** @class */ (function () {
         funcionSeno.representarFuncion(this.canvas, this.context);
     };
     View.prototype.dibujaCoseno = function () {
-        var funcionSeno = new Coseno();
-        funcionSeno.representarFuncion(this.canvas, this.context);
+        var funcionCoseno = new Coseno();
+        funcionCoseno.representarFuncion(this.canvas, this.context);
+    };
+    View.prototype.dibujaExponencial = function () {
+        var funcionExp = new Exponencial();
+        funcionExp.representarFuncion(this.canvas, this.context);
     };
     return View;
 }());
 ///<reference path='view.ts'/>
 var main = function () {
     var vista = new View();
-    vista.dibujaSeno();
+    vista.dibujaExponencial();
 };
 main();

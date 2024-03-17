@@ -11,6 +11,7 @@
 
 ///<reference path='../Seno/seno.ts'/>
 ///<reference path='../Coseno/coseno.ts'/>
+///<reference path='../Exponencial/exponencial.ts'/>
 
 /** 
  * @classdesc A class to represent multiple figures
@@ -33,49 +34,63 @@ class View {
   * Dibuja los ejes X e Y de un sistema de coordenadas cartesiano en un canvas.
   */
   private dibujaEjeCartesiano() {
-    const origenX = this.canvas.width / 2; 
-    const origenY = this.canvas.height / 2; 
-    const escalaX = 50; 
-    const escalaY = 50; 
-    const numTicksX = 50; 
-    const numTicksY = 20; 
+    const origenX = this.canvas.width / 2;
+    const origenY = this.canvas.height / 2;
+    const escalaX = 50;
+    const escalaY = 50;
+    const numTicksX = 50;
+    const numTicksY = 20;
     const LONGITUD_LINEA = 5;
-
+    const TEXT_OFFSET = 8;
+  
     // Limpia
     this.context.fillStyle = 'white';
     this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
-
+  
     // Eje X
     this.context.strokeStyle = 'black';
     this.context.beginPath();
     this.context.moveTo(0, origenY);
     this.context.lineTo(this.canvas.width, origenY);
     this.context.stroke();
-
+  
     // Eje Y
     this.context.beginPath();
     this.context.moveTo(origenX, 0);
     this.context.lineTo(origenX, this.canvas.height);
     this.context.stroke();
-
+  
     // Rayas en el eje X
     for (let i = 0; i < numTicksX; i++) {
-      const tickX = origenX + (i - numTicksX / 2) * escalaX; 
+      const tickX = origenX + (i - numTicksX / 2) * escalaX;
+      const valueX = (i - numTicksX / 2); 
+  
       this.context.beginPath();
-      this.context.moveTo(tickX, origenY - LONGITUD_LINEA); 
-      this.context.lineTo(tickX, origenY + LONGITUD_LINEA); 
+      this.context.moveTo(tickX, origenY - LONGITUD_LINEA);
+      this.context.lineTo(tickX, origenY + LONGITUD_LINEA);
       this.context.stroke();
+  
+      this.context.font = "10px Arial";
+      this.context.fillStyle = "black";
+      this.context.fillText(valueX.toString(), tickX - 3, origenY + 20);
     }
-
+  
     // Rayas en el eje Y
     for (let i = 0; i < numTicksY; i++) {
-      const tickY = origenY + (i - numTicksY / 2) * escalaY; 
+      const tickY = origenY + (i - numTicksY / 2) * escalaY;
+      const valueY = (numTicksY / 2 - i); 
+  
       this.context.beginPath();
-      this.context.moveTo(origenX - LONGITUD_LINEA, tickY); 
-      this.context.lineTo(origenX + LONGITUD_LINEA, tickY); 
+      this.context.moveTo(origenX - LONGITUD_LINEA, tickY);
+      this.context.lineTo(origenX + LONGITUD_LINEA, tickY);
       this.context.stroke();
+  
+      this.context.font = "10px Arial";
+      this.context.fillStyle = "black";
+      this.context.fillText(valueY.toString(), origenX - TEXT_OFFSET * 2, tickY + TEXT_OFFSET / 2);  
     }
   }
+
 
   dibujaSeno() {
     const funcionSeno = new Seno();
@@ -83,8 +98,13 @@ class View {
   }
 
   dibujaCoseno() {
-    const funcionSeno = new Coseno();
-    funcionSeno.representarFuncion(this.canvas, this.context);
+    const funcionCoseno = new Coseno();
+    funcionCoseno.representarFuncion(this.canvas, this.context);
+  }
+
+  dibujaExponencial() {
+    const funcionExp = new Exponencial();
+    funcionExp.representarFuncion(this.canvas, this.context);
   }
   
 }

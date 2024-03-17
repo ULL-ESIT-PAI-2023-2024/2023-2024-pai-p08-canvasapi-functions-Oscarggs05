@@ -26,71 +26,71 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 /**
- * Clase que representa a la funcion del sen(x)
+ * Clase que representa a la función exponencial
  */
-var Seno = /** @class */ (function (_super) {
-    __extends(Seno, _super);
+var Exponencial = /** @class */ (function (_super) {
+    __extends(Exponencial, _super);
     /**
-     * Constructor de la clase `Seno`.
+     * Constructor de la clase `Exponencial`.
      *
-     * @param {number} amplitud - Amplitud de la función seno.
-     * @param {number} periodo - Periodo de la función seno.
-     * @param {number} desfase - Desfase horizontal de la función seno.
+     * @param {number} amplitud - Amplitud de la función exponencial.
+     * @param {number} base - Base de la función exponencial.
+     * @param {number} desfase - Desfase horizontal de la función exponencial.
     */
-    function Seno(amplitud, periodo, desfase) {
+    function Exponencial(amplitud, base, desfase) {
         if (amplitud === void 0) { amplitud = 1; }
-        if (periodo === void 0) { periodo = 2 * Math.PI; }
-        if (desfase === void 0) { desfase = 1; }
+        if (base === void 0) { base = Math.E; }
+        if (desfase === void 0) { desfase = 0; }
         var _this = _super.call(this) || this;
         _this.amplitud = amplitud;
-        _this.periodo = periodo;
+        _this.base = base;
         _this.desfase = desfase;
         _this.amplitud = amplitud;
-        _this.periodo = periodo;
+        _this.base = base;
         _this.desfase = desfase;
         return _this;
     }
     /**
-    * Devuelve la amplitud de la función seno.
-    * @returns {number} - Amplitud de la función seno.
+    * Devuelve la amplitud de la función exponencial.
+    * @returns {number} - Amplitud de la función exponencial.
     */
-    Seno.prototype.getAmplitud = function () {
+    Exponencial.prototype.getAmplitud = function () {
         return this.amplitud;
     };
     /**
-     * Devuelve el periodo de la función seno.
-     * @returns {number} - Periodo de la función seno.
+     * Devuelve la base de la función exponencial.
+     * @returns {number} - Base de la función exponencial.
      */
-    Seno.prototype.getPeriodo = function () {
-        return this.periodo;
+    Exponencial.prototype.getBase = function () {
+        return this.base;
     };
     /**
-     * Devuelve el desfase horizontal de la función seno.
-     * @returns {number} - Desfase horizontal de la función seno.
+     * Devuelve el desfase horizontal de la función exponencial.
+     * @returns {number} - Desfase horizontal de la función exponencial.
      */
-    Seno.prototype.getDesfase = function () {
+    Exponencial.prototype.getDesfase = function () {
         return this.desfase;
     };
     /**
-     * Evalúa la función seno en un valor x específico.
-     * @param {number} x - Valor de entrada para la función seno.
-     * @returns {number} - Valor de la función seno en el punto x.
+     * Evalúa la función exponencial en un valor x específico.
+     * @param {number} x - Valor de entrada para la función exponencial.
+     * @returns {number} - Valor de la función exponencial en el punto x.
      */
-    Seno.prototype.evaluar = function (valorIntroducido) {
-        return this.amplitud * Math.sin(2 * Math.PI * (valorIntroducido - this.desfase) / this.periodo);
+    Exponencial.prototype.evaluar = function (valorIntroducido) {
+        return this.amplitud * Math.pow(this.base, valorIntroducido - this.desfase);
     };
     /**
-     * Devuelve una representación gráfica de la función seno.
+     * Devuelve una representación gráfica de la función exponencial.
      */
-    Seno.prototype.representarFuncion = function (canvas, context) {
+    Exponencial.prototype.representarFuncion = function (canvas, context) {
         var width = canvas.width;
         var height = canvas.height;
-        var scaleX = 100 / (2 * Math.PI); // Escala para ajustar el periodo al ancho del canvas
-        var scaleY = 100 / 2; // Escala para ajustar la amplitud al alto del canvas
+        var scaleX = 100; // Escala para ajustar el ancho del canvas
+        var scaleY = 100; // Escala para ajustar la altura del canvas
         context.beginPath();
         for (var x = 0; x <= width; x++) {
             var valorX = x / scaleX + this.desfase; // Valor x escalado con el desfase
-            var valorY = this.evaluar(valorX) * scaleY + height / 2; // Valor y escalado con la amplitud y desplazado al centro vertical del canvas
+            var valorY = height - this.evaluar(valorX) * scaleY; // Valor y escalado y invertido para que la función crezca hacia arriba
             if (x === 0) {
                 context.moveTo(x, valorY);
             }
@@ -100,5 +100,5 @@ var Seno = /** @class */ (function (_super) {
         }
         context.stroke();
     };
-    return Seno;
+    return Exponencial;
 }(Funciones));

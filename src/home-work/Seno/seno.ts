@@ -23,11 +23,12 @@ class Seno extends Funciones {
    * @param {number} periodo - Periodo de la función seno.
    * @param {number} desfase - Desfase horizontal de la función seno.
   */
-  constructor(private amplitud: number = 1, private periodo: number = 2 * Math.PI, private desfase: number = 1) {
+  constructor(private amplitud: number = 1, private periodo: number = 1, private desfase: number = 1) {
     super();
     this.amplitud = amplitud;
-    this.periodo = periodo;
+    this.periodo = periodo * (2 * Math.PI);
     this.desfase = desfase;
+
   }
 
   /**
@@ -60,8 +61,8 @@ class Seno extends Funciones {
    * @param {number} x - Valor de entrada para la función seno.
    * @returns {number} - Valor de la función seno en el punto x.
    */
-  evaluar(valorIntroducido: number) {
-    return this.amplitud * Math.sin(2 * Math.PI * (valorIntroducido - this.desfase) / this.periodo);
+  evaluar(valorIntroducido: number): number {
+    return this.amplitud * Math.sin(2 * Math.PI * valorIntroducido / this.periodo);
   }
 
   /**
@@ -70,24 +71,19 @@ class Seno extends Funciones {
   representarFuncion(canvas: HTMLCanvasElement, context: CanvasRenderingContext2D) {
     const width = canvas.width;
     const height = canvas.height;
-    const scaleX = 100 / (2 * Math.PI); // Escala para ajustar el periodo al ancho del canvas
-    const scaleY = 100 / 2; // Escala para ajustar la amplitud al alto del canvas
+    const ESCALA_X = 100 / (2 * Math.PI); 
+    const ESCALA_Y = 100 / 2; 
 
     context.beginPath();
-    for (let x = 0; x <= width; x++) {
-      const valorX = x / scaleX + this.desfase; // Valor x escalado con el desfase
-      const valorY = this.evaluar(valorX) * scaleY + height / 2; // Valor y escalado con la amplitud y desplazado al centro vertical del canvas
-      if (x === 0) {
-        context.moveTo(x, valorY);
+    for (let CoordenadaX = 0; CoordenadaX <= width; CoordenadaX++) {
+      const valorX = CoordenadaX / ESCALA_X + this.desfase; 
+      const valorY = this.evaluar(valorX) * ESCALA_Y + height / 2; 
+      if (CoordenadaX === 0) {
+        context.moveTo(CoordenadaX, valorY);
       } else {
-        context.lineTo(x, valorY);
+        context.lineTo(CoordenadaX, valorY);
       }
     }
     context.stroke();
   }
-
- 
-
-
-
 }

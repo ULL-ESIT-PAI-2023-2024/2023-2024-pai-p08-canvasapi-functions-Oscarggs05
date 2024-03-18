@@ -13,8 +13,22 @@
  * Clase abstracta Figura que define un método abstracto getArea().
  */
 abstract class Funciones {
-  representarFuncion(canvas: HTMLCanvasElement, context: CanvasRenderingContext2D) {
-    
+  
+  /**
+   * Evalúa la función raíz cuadrada en un valor específico.
+   * @param {number} valorIntroducido - Valor de entrada para la función raíz cuadrada.
+   */
+  evaluar(valorIntroducido: number): number {
+    return -1;
+  }
+
+  /**
+   * Representa gráficamente la función raíz cuadrada en el canvas proporcionado.
+   * @param {HTMLCanvasElement} canvas - Elemento canvas donde se dibujará la función.
+   * @param {CanvasRenderingContext2D} context - Contexto 2D del canvas.
+   */
+  representarFuncion(canvas: HTMLCanvasElement, context: CanvasRenderingContext2D): void {
+    return;
   }
 }
 

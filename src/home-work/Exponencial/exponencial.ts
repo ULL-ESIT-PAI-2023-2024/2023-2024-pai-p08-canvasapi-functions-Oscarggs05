@@ -23,10 +23,10 @@ class Exponencial extends Funciones {
    * @param {number} base - Base de la función exponencial.
    * @param {number} desfase - Desfase horizontal de la función exponencial.
   */
-  constructor(private amplitud: number = 1, private base: number = Math.E, private desfase: number = 0) {
+  constructor(private amplitud: number = 1, private base: number = 1, private desfase: number = 0) {
     super();
     this.amplitud = amplitud;
-    this.base = base;
+    this.base = base * Math.E;
     this.desfase = desfase;
   }
 
@@ -70,21 +70,19 @@ class Exponencial extends Funciones {
   representarFuncion(canvas: HTMLCanvasElement, context: CanvasRenderingContext2D) {
     const width = canvas.width;
     const height = canvas.height;
-    const scaleX = 50; // Escala para ajustar el ancho del canvas
-    const scaleY = 50; // Escala para ajustar la altura del canvas
+    const ESCALA_X = 50; 
+    const ESCALA_Y = 50; 
   
     context.beginPath();
-  
-    // Calculamos la coordenada x del centro del lienzo
     const centroX = width / 2;
   
-    for (let x = 0; x <= width; x++) {
-      const valorX = (x - centroX) / scaleX + this.desfase; // Valor x escalado y ajustado al centro
-      const valorY = height / 2 - this.evaluar(valorX) * scaleY; // Valor y escalado e invertido
-      if (x === 0) {
-        context.moveTo(x, valorY);
+    for (let CoordenadaX = 0; CoordenadaX <= width; CoordenadaX++) {
+      const valorX = (CoordenadaX - centroX) / ESCALA_X + this.desfase; 
+      const valorY = height / 2 - this.evaluar(valorX) * ESCALA_Y; 
+      if (CoordenadaX === 0) {
+        context.moveTo(CoordenadaX, valorY);
       } else {
-        context.lineTo(x, valorY);
+        context.lineTo(CoordenadaX, valorY);
       }
     }
   

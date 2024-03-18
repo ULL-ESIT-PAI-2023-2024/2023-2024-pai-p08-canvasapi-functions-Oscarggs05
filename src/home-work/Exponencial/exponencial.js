@@ -85,12 +85,13 @@ var Exponencial = /** @class */ (function (_super) {
     Exponencial.prototype.representarFuncion = function (canvas, context) {
         var width = canvas.width;
         var height = canvas.height;
-        var scaleX = 100; // Escala para ajustar el ancho del canvas
-        var scaleY = 100; // Escala para ajustar la altura del canvas
+        var scaleX = 50;
+        var scaleY = 50;
         context.beginPath();
+        var centroX = width / 2;
         for (var x = 0; x <= width; x++) {
-            var valorX = x / scaleX + this.desfase; // Valor x escalado con el desfase
-            var valorY = height - this.evaluar(valorX) * scaleY; // Valor y escalado y invertido para que la función crezca hacia arriba
+            var valorX = (x - centroX) / scaleX + this.desfase;
+            var valorY = height / 2 - this.evaluar(valorX) * scaleY;
             if (x === 0) {
                 context.moveTo(x, valorY);
             }

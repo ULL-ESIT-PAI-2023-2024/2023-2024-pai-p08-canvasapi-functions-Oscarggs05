@@ -12,6 +12,8 @@
 ///<reference path='../Seno/seno.ts'/>
 ///<reference path='../Coseno/coseno.ts'/>
 ///<reference path='../Exponencial/exponencial.ts'/>
+///<reference path='../Raiz/raiz.ts'/>
+
 
 /** 
  * @classdesc A class to represent multiple figures
@@ -91,20 +93,35 @@ class View {
     }
   }
 
-
-  dibujaSeno() {
-    const funcionSeno = new Seno();
+  /**
+   * Dibuja la función seno en el canvas utilizando el contexto proporcionado.
+   */
+  dibujaSeno(amplitud = 1, periodo = 1, desfase= 0) {
+    const funcionSeno = new Seno(amplitud, periodo, desfase);
     funcionSeno.representarFuncion(this.canvas, this.context);
   }
 
-  dibujaCoseno() {
-    const funcionCoseno = new Coseno();
+  /**
+   * Dibuja la función coseno en el canvas utilizando el contexto proporcionado.
+   */
+  dibujaCoseno(amplitud = 1, periodo = 1, desfase= 0) {
+    const funcionCoseno = new Coseno(amplitud, periodo, desfase);
     funcionCoseno.representarFuncion(this.canvas, this.context);
   }
 
-  dibujaExponencial() {
-    const funcionExp = new Exponencial();
+  /**
+   * Dibuja la función exponencial en el canvas utilizando el contexto proporcionado.
+   */
+  dibujaExponencial(amplitud = 1, base = 1, desfase= 0) {
+    const funcionExp = new Exponencial(amplitud, base, desfase);
     funcionExp.representarFuncion(this.canvas, this.context);
   }
-  
+
+  /**
+   * Dibuja la función raíz cuadrada en el canvas utilizando el contexto proporcionado.
+   */
+  dibujaRaiz(amplitud = 1, desplazamientoVertical = 0, desfase= 0) {
+    const funcionSqrt = new Raiz(amplitud, desplazamientoVertical, desfase);
+    funcionSqrt.representarFuncion(this.canvas, this.context);
+  }
 }

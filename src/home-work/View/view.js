@@ -29,7 +29,20 @@ var __extends = (this && this.__extends) || (function () {
 var Funciones = /** @class */ (function () {
     function Funciones() {
     }
+    /**
+     * Evalúa la función raíz cuadrada en un valor específico.
+     * @param {number} valorIntroducido - Valor de entrada para la función raíz cuadrada.
+     */
+    Funciones.prototype.evaluar = function (valorIntroducido) {
+        return -1;
+    };
+    /**
+     * Representa gráficamente la función raíz cuadrada en el canvas proporcionado.
+     * @param {HTMLCanvasElement} canvas - Elemento canvas donde se dibujará la función.
+     * @param {CanvasRenderingContext2D} context - Contexto 2D del canvas.
+     */
     Funciones.prototype.representarFuncion = function (canvas, context) {
+        return;
     };
     return Funciones;
 }());
@@ -59,14 +72,14 @@ var Seno = /** @class */ (function (_super) {
     */
     function Seno(amplitud, periodo, desfase) {
         if (amplitud === void 0) { amplitud = 1; }
-        if (periodo === void 0) { periodo = 2 * Math.PI; }
+        if (periodo === void 0) { periodo = 1; }
         if (desfase === void 0) { desfase = 1; }
         var _this = _super.call(this) || this;
         _this.amplitud = amplitud;
         _this.periodo = periodo;
         _this.desfase = desfase;
         _this.amplitud = amplitud;
-        _this.periodo = periodo;
+        _this.periodo = periodo * (2 * Math.PI);
         _this.desfase = desfase;
         return _this;
     }
@@ -97,7 +110,7 @@ var Seno = /** @class */ (function (_super) {
      * @returns {number} - Valor de la función seno en el punto x.
      */
     Seno.prototype.evaluar = function (valorIntroducido) {
-        return this.amplitud * Math.sin(2 * Math.PI * (valorIntroducido - this.desfase) / this.periodo);
+        return this.amplitud * Math.sin(2 * Math.PI * valorIntroducido / this.periodo);
     };
     /**
      * Devuelve una representación gráfica de la función seno.
@@ -105,17 +118,17 @@ var Seno = /** @class */ (function (_super) {
     Seno.prototype.representarFuncion = function (canvas, context) {
         var width = canvas.width;
         var height = canvas.height;
-        var scaleX = 100 / (2 * Math.PI); // Escala para ajustar el periodo al ancho del canvas
-        var scaleY = 100 / 2; // Escala para ajustar la amplitud al alto del canvas
+        var ESCALA_X = 100 / (2 * Math.PI);
+        var ESCALA_Y = 100 / 2;
         context.beginPath();
-        for (var x = 0; x <= width; x++) {
-            var valorX = x / scaleX + this.desfase; // Valor x escalado con el desfase
-            var valorY = this.evaluar(valorX) * scaleY + height / 2; // Valor y escalado con la amplitud y desplazado al centro vertical del canvas
-            if (x === 0) {
-                context.moveTo(x, valorY);
+        for (var CoordenadaX = 0; CoordenadaX <= width; CoordenadaX++) {
+            var valorX = CoordenadaX / ESCALA_X + this.desfase;
+            var valorY = this.evaluar(valorX) * ESCALA_Y + height / 2;
+            if (CoordenadaX === 0) {
+                context.moveTo(CoordenadaX, valorY);
             }
             else {
-                context.lineTo(x, valorY);
+                context.lineTo(CoordenadaX, valorY);
             }
         }
         context.stroke();
@@ -148,14 +161,14 @@ var Coseno = /** @class */ (function (_super) {
     */
     function Coseno(amplitud, periodo, desfase) {
         if (amplitud === void 0) { amplitud = 1; }
-        if (periodo === void 0) { periodo = 2 * Math.PI; }
+        if (periodo === void 0) { periodo = 1; }
         if (desfase === void 0) { desfase = 1; }
         var _this = _super.call(this) || this;
         _this.amplitud = amplitud;
         _this.periodo = periodo;
         _this.desfase = desfase;
         _this.amplitud = amplitud;
-        _this.periodo = periodo;
+        _this.periodo = periodo * (2 * Math.PI);
         _this.desfase = desfase;
         return _this;
     }
@@ -186,7 +199,7 @@ var Coseno = /** @class */ (function (_super) {
      * @returns {number} - Valor de la función coseno en el punto x.
      */
     Coseno.prototype.evaluar = function (valorIntroducido) {
-        return this.amplitud * Math.cos(2 * Math.PI * (valorIntroducido - this.desfase) / this.periodo);
+        return this.amplitud * Math.cos(2 * Math.PI * valorIntroducido / this.periodo);
     };
     /**
      * Devuelve una representación gráfica de la función coseno.
@@ -194,17 +207,17 @@ var Coseno = /** @class */ (function (_super) {
     Coseno.prototype.representarFuncion = function (canvas, context) {
         var width = canvas.width;
         var height = canvas.height;
-        var scaleX = 100 / (2 * Math.PI); // Escala para ajustar el periodo al ancho del canvas
-        var scaleY = 100 / 2; // Escala para ajustar la amplitud al alto del canvas
+        var ESCALA_X = 100 / (2 * Math.PI);
+        var ESCALA_Y = 100 / 2;
         context.beginPath();
-        for (var x = 0; x <= width; x++) {
-            var valorX = x / scaleX + this.desfase; // Valor x escalado con el desfase
-            var valorY = this.evaluar(valorX) * scaleY + height / 2; // Valor y escalado con la amplitud y desplazado al centro vertical del canvas
-            if (x === 0) {
-                context.moveTo(x, valorY);
+        for (var CoordenadaX = 0; CoordenadaX <= width; CoordenadaX++) {
+            var valorX = CoordenadaX / ESCALA_X + this.desfase;
+            var valorY = this.evaluar(valorX) * ESCALA_Y + height / 2;
+            if (CoordenadaX === 0) {
+                context.moveTo(CoordenadaX, valorY);
             }
             else {
-                context.lineTo(x, valorY);
+                context.lineTo(CoordenadaX, valorY);
             }
         }
         context.stroke();
@@ -237,14 +250,14 @@ var Exponencial = /** @class */ (function (_super) {
     */
     function Exponencial(amplitud, base, desfase) {
         if (amplitud === void 0) { amplitud = 1; }
-        if (base === void 0) { base = Math.E; }
+        if (base === void 0) { base = 1; }
         if (desfase === void 0) { desfase = 0; }
         var _this = _super.call(this) || this;
         _this.amplitud = amplitud;
         _this.base = base;
         _this.desfase = desfase;
         _this.amplitud = amplitud;
-        _this.base = base;
+        _this.base = base * Math.E;
         _this.desfase = desfase;
         return _this;
     }
@@ -283,19 +296,18 @@ var Exponencial = /** @class */ (function (_super) {
     Exponencial.prototype.representarFuncion = function (canvas, context) {
         var width = canvas.width;
         var height = canvas.height;
-        var scaleX = 50; // Escala para ajustar el ancho del canvas
-        var scaleY = 50; // Escala para ajustar la altura del canvas
+        var ESCALA_X = 50;
+        var ESCALA_Y = 50;
         context.beginPath();
-        // Calculamos la coordenada x del centro del lienzo
         var centroX = width / 2;
-        for (var x = 0; x <= width; x++) {
-            var valorX = (x - centroX) / scaleX + this.desfase; // Valor x escalado y ajustado al centro
-            var valorY = height / 2 - this.evaluar(valorX) * scaleY; // Valor y escalado e invertido
-            if (x === 0) {
-                context.moveTo(x, valorY);
+        for (var CoordenadaX = 0; CoordenadaX <= width; CoordenadaX++) {
+            var valorX = (CoordenadaX - centroX) / ESCALA_X + this.desfase;
+            var valorY = height / 2 - this.evaluar(valorX) * ESCALA_Y;
+            if (CoordenadaX === 0) {
+                context.moveTo(CoordenadaX, valorY);
             }
             else {
-                context.lineTo(x, valorY);
+                context.lineTo(CoordenadaX, valorY);
             }
         }
         context.stroke();
@@ -312,9 +324,99 @@ var Exponencial = /** @class */ (function (_super) {
  * @since March 29 2022
  * @desc funcionamiento con la clase main
 */
+///<reference path='../Funciones/funciones.ts'/>
+///<reference path='../View/view.ts'/>
+/**
+ * Clase que representa a la función raíz cuadrada.
+ */
+var Raiz = /** @class */ (function (_super) {
+    __extends(Raiz, _super);
+    /**
+     * Constructor de la clase `Raiz`.
+     *
+     * @param {number} amplitud - Amplitud de la función raíz cuadrada.
+     * @param {number} desplazamientoVertical - Desplazamiento vertical de la función raíz cuadrada.
+     * @param {number} desfase - Desfase horizontal de la función raíz cuadrada.
+     */
+    function Raiz(amplitud, desplazamientoVertical, desfase) {
+        if (amplitud === void 0) { amplitud = 1; }
+        if (desplazamientoVertical === void 0) { desplazamientoVertical = 0; }
+        if (desfase === void 0) { desfase = 0; }
+        var _this = _super.call(this) || this;
+        _this.amplitud = amplitud;
+        _this.desplazamientoVertical = desplazamientoVertical;
+        _this.desfase = desfase;
+        _this.amplitud = amplitud;
+        _this.desplazamientoVertical = desplazamientoVertical;
+        _this.desfase = desfase;
+        return _this;
+    }
+    /**
+     * Devuelve la amplitud de la función raíz cuadrada.
+     * @returns {number} - Amplitud de la función raíz cuadrada.
+     */
+    Raiz.prototype.getAmplitud = function () {
+        return this.amplitud;
+    };
+    /**
+     * Devuelve el desplazamiento vertical de la función raíz cuadrada.
+     * @returns {number} - Desplazamiento vertical de la función raíz cuadrada.
+     */
+    Raiz.prototype.getDesplazamientoVertical = function () {
+        return this.desplazamientoVertical;
+    };
+    /**
+     * Devuelve el desfase horizontal de la función raíz cuadrada.
+     * @returns {number} - Desfase horizontal de la función raíz cuadrada.
+     */
+    Raiz.prototype.getDesfase = function () {
+        return this.desfase;
+    };
+    /**
+     * Evalúa la función raíz cuadrada en un valor x específico.
+     * @param {number} x - Valor de entrada para la función raíz cuadrada.
+     * @returns {number} - Valor de la función raíz cuadrada en el punto x.
+     */
+    Raiz.prototype.evaluar = function (numeroEvaluar) {
+        return this.amplitud * Math.sqrt(numeroEvaluar) + this.desplazamientoVertical;
+    };
+    /**
+     * Devuelve una representación gráfica de la función raíz cuadrada.
+     */
+    Raiz.prototype.representarFuncion = function (canvas, context) {
+        var width = canvas.width;
+        var height = canvas.height;
+        var ESCALA_X = 100 / (2 * Math.PI);
+        var ESCALA_Y = 100 / 2;
+        context.beginPath();
+        for (var CoordenadaX = width / 2; CoordenadaX <= width; CoordenadaX++) {
+            var valorX = (CoordenadaX - width / 2) / ESCALA_X + this.desfase;
+            var valorY = -this.evaluar(valorX) * ESCALA_Y + height / 2;
+            if (CoordenadaX === width / 2) {
+                context.moveTo(CoordenadaX, valorY);
+            }
+            else {
+                context.lineTo(CoordenadaX, valorY);
+            }
+        }
+        context.stroke();
+    };
+    return Raiz;
+}(Funciones));
+/**
+ * Universidad de La Laguna
+ * Escuela Superior de Ingeniería y Tecnología
+ * Grado en Ingeniería Informática
+ * Programación de Aplicaciones Interactivas
+ *
+ * @author Oscar Garcia Gonzalez
+ * @since March 29 2022
+ * @desc funcionamiento con la clase main
+*/
 ///<reference path='../Seno/seno.ts'/>
 ///<reference path='../Coseno/coseno.ts'/>
 ///<reference path='../Exponencial/exponencial.ts'/>
+///<reference path='../Raiz/raiz.ts'/>
 /**
  * @classdesc A class to represent multiple figures
  */
@@ -381,23 +483,51 @@ var View = /** @class */ (function () {
             this.context.fillText(valueY.toString(), origenX - TEXT_OFFSET * 2, tickY + TEXT_OFFSET / 2);
         }
     };
-    View.prototype.dibujaSeno = function () {
-        var funcionSeno = new Seno();
+    /**
+     * Dibuja la función seno en el canvas utilizando el contexto proporcionado.
+     */
+    View.prototype.dibujaSeno = function (amplitud, periodo, desfase) {
+        if (amplitud === void 0) { amplitud = 1; }
+        if (periodo === void 0) { periodo = 1; }
+        if (desfase === void 0) { desfase = 0; }
+        var funcionSeno = new Seno(amplitud, periodo, desfase);
         funcionSeno.representarFuncion(this.canvas, this.context);
     };
-    View.prototype.dibujaCoseno = function () {
-        var funcionCoseno = new Coseno();
+    /**
+     * Dibuja la función coseno en el canvas utilizando el contexto proporcionado.
+     */
+    View.prototype.dibujaCoseno = function (amplitud, periodo, desfase) {
+        if (amplitud === void 0) { amplitud = 1; }
+        if (periodo === void 0) { periodo = 1; }
+        if (desfase === void 0) { desfase = 0; }
+        var funcionCoseno = new Coseno(amplitud, periodo, desfase);
         funcionCoseno.representarFuncion(this.canvas, this.context);
     };
-    View.prototype.dibujaExponencial = function () {
-        var funcionExp = new Exponencial();
+    /**
+     * Dibuja la función exponencial en el canvas utilizando el contexto proporcionado.
+     */
+    View.prototype.dibujaExponencial = function (amplitud, base, desfase) {
+        if (amplitud === void 0) { amplitud = 1; }
+        if (base === void 0) { base = 1; }
+        if (desfase === void 0) { desfase = 0; }
+        var funcionExp = new Exponencial(amplitud, base, desfase);
         funcionExp.representarFuncion(this.canvas, this.context);
+    };
+    /**
+     * Dibuja la función raíz cuadrada en el canvas utilizando el contexto proporcionado.
+     */
+    View.prototype.dibujaRaiz = function (amplitud, desplazamientoVertical, desfase) {
+        if (amplitud === void 0) { amplitud = 1; }
+        if (desplazamientoVertical === void 0) { desplazamientoVertical = 0; }
+        if (desfase === void 0) { desfase = 0; }
+        var funcionSqrt = new Raiz(amplitud, desplazamientoVertical, desfase);
+        funcionSqrt.representarFuncion(this.canvas, this.context);
     };
     return View;
 }());
 ///<reference path='view.ts'/>
 var main = function () {
     var vista = new View();
-    vista.dibujaExponencial();
+    vista.dibujaSeno();
 };
 main();

@@ -39,14 +39,14 @@ var Coseno = /** @class */ (function (_super) {
     */
     function Coseno(amplitud, periodo, desfase) {
         if (amplitud === void 0) { amplitud = 1; }
-        if (periodo === void 0) { periodo = 2 * Math.PI; }
+        if (periodo === void 0) { periodo = 1; }
         if (desfase === void 0) { desfase = 1; }
         var _this = _super.call(this) || this;
         _this.amplitud = amplitud;
         _this.periodo = periodo;
         _this.desfase = desfase;
         _this.amplitud = amplitud;
-        _this.periodo = periodo;
+        _this.periodo = periodo * (2 * Math.PI);
         _this.desfase = desfase;
         return _this;
     }
@@ -85,12 +85,12 @@ var Coseno = /** @class */ (function (_super) {
     Coseno.prototype.representarFuncion = function (canvas, context) {
         var width = canvas.width;
         var height = canvas.height;
-        var scaleX = 100 / (2 * Math.PI); // Escala para ajustar el periodo al ancho del canvas
-        var scaleY = 100 / 2; // Escala para ajustar la amplitud al alto del canvas
+        var scaleX = 100 / (2 * Math.PI);
+        var scaleY = 100 / 2;
         context.beginPath();
         for (var x = 0; x <= width; x++) {
-            var valorX = x / scaleX + this.desfase; // Valor x escalado con el desfase
-            var valorY = this.evaluar(valorX) * scaleY + height / 2; // Valor y escalado con la amplitud y desplazado al centro vertical del canvas
+            var valorX = x / scaleX + this.desfase;
+            var valorY = this.evaluar(valorX) * scaleY + height / 2;
             if (x === 0) {
                 context.moveTo(x, valorY);
             }

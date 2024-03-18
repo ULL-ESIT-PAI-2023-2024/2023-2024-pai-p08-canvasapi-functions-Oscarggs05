@@ -14,6 +14,18 @@
 var Funciones = /** @class */ (function () {
     function Funciones() {
     }
+    /**
+     * Evalúa la función raíz cuadrada en un valor específico.
+     * @param {number} valorIntroducido - Valor de entrada para la función raíz cuadrada.
+     */
+    Funciones.prototype.evaluar = function (valorIntroducido) {
+        return -1;
+    };
+    /**
+     * Representa gráficamente la función raíz cuadrada en el canvas proporcionado.
+     * @param {HTMLCanvasElement} canvas - Elemento canvas donde se dibujará la función.
+     * @param {CanvasRenderingContext2D} context - Contexto 2D del canvas.
+     */
     Funciones.prototype.representarFuncion = function (canvas, context) {
     };
     return Funciones;

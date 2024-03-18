@@ -2,7 +2,7 @@
 
 const main = function (): void {
   const vista = new View();
-  vista.dibujaExponencial(); 
+  vista.dibujaSeno(); 
 }
 
 main();

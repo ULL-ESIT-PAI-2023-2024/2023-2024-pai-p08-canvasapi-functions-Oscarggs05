@@ -39,14 +39,14 @@ var Exponencial = /** @class */ (function (_super) {
     */
     function Exponencial(amplitud, base, desfase) {
         if (amplitud === void 0) { amplitud = 1; }
-        if (base === void 0) { base = Math.E; }
+        if (base === void 0) { base = 1; }
         if (desfase === void 0) { desfase = 0; }
         var _this = _super.call(this) || this;
         _this.amplitud = amplitud;
         _this.base = base;
         _this.desfase = desfase;
         _this.amplitud = amplitud;
-        _this.base = base;
+        _this.base = base * Math.E;
         _this.desfase = desfase;
         return _this;
     }
@@ -85,18 +85,18 @@ var Exponencial = /** @class */ (function (_super) {
     Exponencial.prototype.representarFuncion = function (canvas, context) {
         var width = canvas.width;
         var height = canvas.height;
-        var scaleX = 50;
-        var scaleY = 50;
+        var ESCALA_X = 50;
+        var ESCALA_Y = 50;
         context.beginPath();
         var centroX = width / 2;
-        for (var x = 0; x <= width; x++) {
-            var valorX = (x - centroX) / scaleX + this.desfase;
-            var valorY = height / 2 - this.evaluar(valorX) * scaleY;
-            if (x === 0) {
-                context.moveTo(x, valorY);
+        for (var CoordenadaX = 0; CoordenadaX <= width; CoordenadaX++) {
+            var valorX = (CoordenadaX - centroX) / ESCALA_X + this.desfase;
+            var valorY = height / 2 - this.evaluar(valorX) * ESCALA_Y;
+            if (CoordenadaX === 0) {
+                context.moveTo(CoordenadaX, valorY);
             }
             else {
-                context.lineTo(x, valorY);
+                context.lineTo(CoordenadaX, valorY);
             }
         }
         context.stroke();

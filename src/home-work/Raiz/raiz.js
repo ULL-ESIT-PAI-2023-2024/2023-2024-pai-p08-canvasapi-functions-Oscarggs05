@@ -77,7 +77,7 @@ var Raiz = /** @class */ (function (_super) {
      * @returns {number} - Valor de la función raíz cuadrada en el punto x.
      */
     Raiz.prototype.evaluar = function (numeroEvaluar) {
-        return this.amplitud * Math.sqrt(numeroEvaluar - this.desfase) + this.desplazamientoVertical;
+        return this.amplitud * Math.sqrt(numeroEvaluar) + this.desplazamientoVertical;
     };
     /**
      * Devuelve una representación gráfica de la función raíz cuadrada.
@@ -85,17 +85,17 @@ var Raiz = /** @class */ (function (_super) {
     Raiz.prototype.representarFuncion = function (canvas, context) {
         var width = canvas.width;
         var height = canvas.height;
-        var scaleX = 100 / (2 * Math.PI);
-        var scaleY = 100 / 2;
+        var ESCALA_X = 400 / (2 * Math.PI);
+        var ESCALA_Y = 100 / 2;
         context.beginPath();
-        for (var x = width / 2; x <= width; x++) {
-            var valorX = (x - width / 2) / scaleX + this.desfase;
-            var valorY = -this.evaluar(valorX) * scaleY + height / 2;
-            if (x === width / 2) {
-                context.moveTo(x, valorY);
+        for (var CoordenadaX = width / 2; CoordenadaX <= width; CoordenadaX++) {
+            var valorX = (CoordenadaX - width / 2) / ESCALA_X + this.desfase;
+            var valorY = -this.evaluar(valorX) * ESCALA_Y + height / 2;
+            if (CoordenadaX === width / 2) {
+                context.moveTo(CoordenadaX, valorY);
             }
             else {
-                context.lineTo(x, valorY);
+                context.lineTo(CoordenadaX, valorY);
             }
         }
         context.stroke();

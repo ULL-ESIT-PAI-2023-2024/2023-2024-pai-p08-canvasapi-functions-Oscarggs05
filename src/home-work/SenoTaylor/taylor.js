@@ -28,77 +28,83 @@ var __extends = (this && this.__extends) || (function () {
 /**
  * Clase que representa a la funcion del sen(x)
  */
-var Seno = /** @class */ (function (_super) {
-    __extends(Seno, _super);
+var Taylor = /** @class */ (function (_super) {
+    __extends(Taylor, _super);
     /**
      * Constructor de la clase `Seno`.
      *
-     * @param {number} amplitud - Amplitud de la función seno.
-     * @param {number} periodo - Periodo de la función seno.
-     * @param {number} desfase - Desfase horizontal de la función seno.
+     * @param {number} cantidadNumerosAproximacion - numeros usados en la aproximacion del seno
     */
-    function Seno(amplitud, periodo, desfase) {
-        if (amplitud === void 0) { amplitud = 1; }
-        if (periodo === void 0) { periodo = 1; }
-        if (desfase === void 0) { desfase = 1; }
+    function Taylor(cantidadNumerosAproximacion) {
+        if (cantidadNumerosAproximacion === void 0) { cantidadNumerosAproximacion = 1; }
         var _this = _super.call(this) || this;
-        _this.amplitud = amplitud;
-        _this.periodo = periodo;
-        _this.desfase = desfase;
-        _this.amplitud = amplitud;
-        _this.periodo = periodo * (2 * Math.PI);
-        _this.desfase = desfase;
+        _this.cantidadNumerosAproximacion = cantidadNumerosAproximacion;
+        _this.cantidadNumerosAproximacion = cantidadNumerosAproximacion;
         return _this;
     }
     /**
     * Devuelve la amplitud de la función seno.
     * @returns {number} - Amplitud de la función seno.
     */
-    Seno.prototype.getAmplitud = function () {
-        return this.amplitud;
-    };
-    /**
-     * Devuelve el periodo de la función seno.
-     * @returns {number} - Periodo de la función seno.
-     */
-    Seno.prototype.getPeriodo = function () {
-        return this.periodo;
-    };
-    /**
-     * Devuelve el desfase horizontal de la función seno.
-     * @returns {number} - Desfase horizontal de la función seno.
-     */
-    Seno.prototype.getDesfase = function () {
-        return this.desfase;
+    Taylor.prototype.getCantidadNumerosAproximacion = function () {
+        return this.cantidadNumerosAproximacion;
     };
     /**
      * Evalúa la función seno en un valor x específico.
      * @param {number} x - Valor de entrada para la función seno.
      * @returns {number} - Valor de la función seno en el punto x.
      */
-    Seno.prototype.evaluar = function (valorIntroducido) {
-        return this.amplitud * Math.sin(2 * Math.PI * valorIntroducido / this.periodo);
+    Taylor.prototype.evaluar = function (valorIntroducido) {
+        if (this.cantidadNumerosAproximacion === 1) {
+            return valorIntroducido;
+        }
+        var resultadoEvaluado = valorIntroducido;
+        var factorial = 1;
+        for (var i = 2; i <= this.cantidadNumerosAproximacion; i++) {
+            factorial *= i;
+            var operacion = 0; // 0 = Resta | 1 = Suma
+            if (!(i % 2 === 0)) {
+                if (operacion === 0) {
+                    resultadoEvaluado = resultadoEvaluado - (Math.pow(valorIntroducido, i) / factorial);
+                    operacion = 1;
+                }
+                else if (operacion === 1) {
+                    resultadoEvaluado = resultadoEvaluado + (Math.pow(valorIntroducido, i) / factorial);
+                    operacion = 0;
+                }
+            }
+            else {
+                if (operacion === 0) {
+                    operacion = 1;
+                }
+                else if (operacion === 1) {
+                    operacion = 0;
+                }
+            }
+        }
+        return -resultadoEvaluado;
     };
     /**
      * Devuelve una representación gráfica de la función seno.
      */
-    Seno.prototype.representarFuncion = function (canvas, context) {
+    Taylor.prototype.representarFuncion = function (canvas, context) {
         var width = canvas.width;
         var height = canvas.height;
-        var ESCALA_X = 100 / (2 * Math.PI);
-        var ESCALA_Y = 100 / 2;
+        var ESCALA_X = 50;
+        var ESCALA_Y = 50;
         context.beginPath();
         for (var CoordenadaX = 0; CoordenadaX <= width; CoordenadaX++) {
-            var valorX = CoordenadaX / ESCALA_X + this.desfase;
+            var valorX = (CoordenadaX - width / 2) / ESCALA_X;
             var valorY = this.evaluar(valorX) * ESCALA_Y + height / 2;
             if (CoordenadaX === 0) {
                 context.moveTo(CoordenadaX, valorY);
             }
             else {
+                console.log(CoordenadaX, valorY);
                 context.lineTo(CoordenadaX, valorY);
             }
         }
         context.stroke();
     };
-    return Seno;
+    return Taylor;
 }(Funciones));

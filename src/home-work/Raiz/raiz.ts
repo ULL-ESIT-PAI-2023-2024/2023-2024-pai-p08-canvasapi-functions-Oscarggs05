@@ -69,7 +69,7 @@ class Raiz extends Funciones {
   representarFuncion(canvas: HTMLCanvasElement, context: CanvasRenderingContext2D) {
     const width = canvas.width;
     const height = canvas.height;
-    const ESCALA_X = 100 / (2 * Math.PI);
+    const ESCALA_X = 400 / (2 * Math.PI);
     const ESCALA_Y = 100 / 2; 
  
     context.beginPath();

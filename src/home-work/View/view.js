@@ -386,7 +386,7 @@ var Raiz = /** @class */ (function (_super) {
     Raiz.prototype.representarFuncion = function (canvas, context) {
         var width = canvas.width;
         var height = canvas.height;
-        var ESCALA_X = 100 / (2 * Math.PI);
+        var ESCALA_X = 400 / (2 * Math.PI);
         var ESCALA_Y = 100 / 2;
         context.beginPath();
         for (var CoordenadaX = width / 2; CoordenadaX <= width; CoordenadaX++) {
@@ -413,10 +413,98 @@ var Raiz = /** @class */ (function (_super) {
  * @since March 29 2022
  * @desc funcionamiento con la clase main
 */
+///<reference path='../Funciones/funciones.ts'/>
+///<reference path='../View/view.ts'/>
+/**
+ * Clase que representa a la funcion del sen(x)
+ */
+var Taylor = /** @class */ (function (_super) {
+    __extends(Taylor, _super);
+    /**
+     * Constructor de la clase `Seno`.
+     *
+     * @param {number} cantidadNumerosAproximacion - numeros usados en la aproximacion del seno
+    */
+    function Taylor(cantidadNumerosAproximacion) {
+        if (cantidadNumerosAproximacion === void 0) { cantidadNumerosAproximacion = 1; }
+        var _this = _super.call(this) || this;
+        _this.cantidadNumerosAproximacion = cantidadNumerosAproximacion;
+        _this.cantidadNumerosAproximacion = cantidadNumerosAproximacion;
+        return _this;
+    }
+    /**
+    * Devuelve la amplitud de la función seno.
+    * @returns {number} - Amplitud de la función seno.
+    */
+    Taylor.prototype.getCantidadNumerosAproximacion = function () {
+        return this.cantidadNumerosAproximacion;
+    };
+    /**
+     * Evalúa la función seno en un valor x específico.
+     * @param {number} x - Valor de entrada para la función seno.
+     * @returns {number} - Valor de la función seno en el punto x.
+     */
+    Taylor.prototype.evaluar = function (valorIntroducido) {
+        if (this.cantidadNumerosAproximacion === 1) {
+            return valorIntroducido;
+        }
+        var resultadoEvaluado = valorIntroducido;
+        var factorial = 1;
+        for (var i = 2; i <= this.cantidadNumerosAproximacion; i++) {
+            factorial *= i;
+            var operacion = 0; // 0 = Resta | 1 = Suma
+            if (!(i % 2 === 0)) {
+                if (operacion === 0) {
+                    resultadoEvaluado = resultadoEvaluado - (Math.pow(valorIntroducido, i) / factorial);
+                    operacion = 1;
+                }
+                else if (operacion === 1) {
+                    resultadoEvaluado = resultadoEvaluado + (Math.pow(valorIntroducido, i) / factorial);
+                    operacion = 0;
+                }
+            }
+        }
+        return resultadoEvaluado;
+    };
+    /**
+     * Devuelve una representación gráfica de la función seno.
+     */
+    Taylor.prototype.representarFuncion = function (canvas, context) {
+        var width = canvas.width;
+        var height = canvas.height;
+        var ESCALA_X = 50;
+        var ESCALA_Y = 50;
+        context.beginPath();
+        for (var CoordenadaX = 0; CoordenadaX <= width; CoordenadaX++) {
+            var valorX = (CoordenadaX - width / 2) / ESCALA_X;
+            var valorY = -this.evaluar(valorX) * ESCALA_Y + height / 2;
+            if (CoordenadaX === 0) {
+                context.moveTo(CoordenadaX, valorY);
+            }
+            else {
+                console.log(CoordenadaX, valorY);
+                context.lineTo(CoordenadaX, valorY);
+            }
+        }
+        context.stroke();
+    };
+    return Taylor;
+}(Funciones));
+/**
+ * Universidad de La Laguna
+ * Escuela Superior de Ingeniería y Tecnología
+ * Grado en Ingeniería Informática
+ * Programación de Aplicaciones Interactivas
+ *
+ * @author Oscar Garcia Gonzalez
+ * @since March 29 2022
+ * @desc funcionamiento con la clase main
+*/
 ///<reference path='../Seno/seno.ts'/>
 ///<reference path='../Coseno/coseno.ts'/>
 ///<reference path='../Exponencial/exponencial.ts'/>
 ///<reference path='../Raiz/raiz.ts'/>
+///<reference path='../SenoTaylor/taylor.ts'/>
 /**
  * @classdesc A class to represent multiple figures
  */
@@ -431,6 +519,7 @@ var View = /** @class */ (function () {
         // console.log('Constructor is executing...');
         // alert('Constructor is executing...');
         this.dibujaEjeCartesiano();
+        this.dibujaCuadriculas();
     }
     /**
     * Dibuja los ejes X e Y de un sistema de coordenadas cartesiano en un canvas.
@@ -484,6 +573,35 @@ var View = /** @class */ (function () {
         }
     };
     /**
+    * Dibuja las cuadriculas.
+    */
+    View.prototype.dibujaCuadriculas = function () {
+        var escalaX = 50;
+        var escalaY = 50;
+        // Eje X Inf
+        this.context.strokeStyle = 'grey';
+        this.context.beginPath();
+        for (var i = this.canvas.height / 2; i < this.canvas.height; i += escalaY) {
+            this.context.moveTo(0, i);
+            this.context.lineTo(this.canvas.width, i);
+            this.context.stroke();
+        }
+        // Eje X Sup
+        for (var i = this.canvas.height / 2; i > 0; i -= escalaY) {
+            this.context.moveTo(0, i);
+            this.context.lineTo(this.canvas.width, i);
+            this.context.stroke();
+        }
+        // Eje Y
+        this.context.beginPath();
+        for (var i = 0; i < this.canvas.width; i += escalaX) {
+            this.context.moveTo(i, 0);
+            this.context.lineTo(i, this.canvas.height);
+            this.context.stroke();
+        }
+        this.context.strokeStyle = 'black';
+    };
+    /**
      * Dibuja la función seno en el canvas utilizando el contexto proporcionado.
      */
     View.prototype.dibujaSeno = function (amplitud, periodo, desfase) {
@@ -523,11 +641,23 @@ var View = /** @class */ (function () {
         var funcionSqrt = new Raiz(amplitud, desplazamientoVertical, desfase);
         funcionSqrt.representarFuncion(this.canvas, this.context);
     };
+    /**
+     * Dibuja la función raíz cuadrada en el canvas utilizando el contexto proporcionado.
+     */
+    View.prototype.dibujaTaylor = function (cantidadNumerosAproximacion) {
+        if (cantidadNumerosAproximacion === void 0) { cantidadNumerosAproximacion = 1; }
+        var funcionSenoTaylor = new Taylor(cantidadNumerosAproximacion);
+        funcionSenoTaylor.representarFuncion(this.canvas, this.context);
+    };
     return View;
 }());
 ///<reference path='view.ts'/>
 var main = function () {
     var vista = new View();
+    vista.dibujaRaiz();
     vista.dibujaSeno();
+    vista.dibujaTaylor(5);
 };
 main();
+// npx tsc view.ts 
+// npx tsc --outFile view.js view-client.ts 

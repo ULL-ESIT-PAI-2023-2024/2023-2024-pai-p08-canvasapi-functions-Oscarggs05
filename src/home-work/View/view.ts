@@ -13,6 +13,7 @@
 ///<reference path='../Coseno/coseno.ts'/>
 ///<reference path='../Exponencial/exponencial.ts'/>
 ///<reference path='../Raiz/raiz.ts'/>
+///<reference path='../SenoTaylor/taylor.ts'/>
 
 
 /** 
@@ -30,6 +31,7 @@ class View {
     // console.log('Constructor is executing...');
     // alert('Constructor is executing...');
     this.dibujaEjeCartesiano();
+    this.dibujaCuadriculas();
   }
 
   /**
@@ -94,6 +96,41 @@ class View {
   }
 
   /**
+  * Dibuja las cuadriculas.
+  */
+  private dibujaCuadriculas() {
+    const escalaX = 50;
+    const escalaY = 50;
+
+    // Eje X Inf
+    this.context.strokeStyle = 'grey';
+    this.context.beginPath();
+    for (let i = this.canvas.height / 2; i < this.canvas.height; i += escalaY) {
+      this.context.moveTo(0, i);
+      this.context.lineTo(this.canvas.width, i);
+      this.context.stroke();
+    }
+
+    // Eje X Sup
+    for (let i = this.canvas.height / 2; i > 0; i -= escalaY) {
+      this.context.moveTo(0, i);
+      this.context.lineTo(this.canvas.width, i);
+      this.context.stroke();
+    }
+
+  
+    // Eje Y
+    this.context.beginPath();
+    for (let i = 0; i < this.canvas.width; i += escalaX) {
+      this.context.moveTo(i, 0);
+      this.context.lineTo(i, this.canvas.height);
+      this.context.stroke();
+    }
+    
+    this.context.strokeStyle = 'black';
+  }
+
+  /**
    * Dibuja la función seno en el canvas utilizando el contexto proporcionado.
    */
   dibujaSeno(amplitud = 1, periodo = 1, desfase= 0) {
@@ -123,5 +160,13 @@ class View {
   dibujaRaiz(amplitud = 1, desplazamientoVertical = 0, desfase= 0) {
     const funcionSqrt = new Raiz(amplitud, desplazamientoVertical, desfase);
     funcionSqrt.representarFuncion(this.canvas, this.context);
+  }
+
+  /**
+   * Dibuja la función raíz cuadrada en el canvas utilizando el contexto proporcionado.
+   */
+  dibujaTaylor(cantidadNumerosAproximacion = 1) {
+    const funcionSenoTaylor = new Taylor(cantidadNumerosAproximacion);
+    funcionSenoTaylor.representarFuncion(this.canvas, this.context);
   }
 }

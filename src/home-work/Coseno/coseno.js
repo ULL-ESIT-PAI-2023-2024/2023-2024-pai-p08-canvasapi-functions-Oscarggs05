@@ -77,7 +77,7 @@ var Coseno = /** @class */ (function (_super) {
      * @returns {number} - Valor de la función coseno en el punto x.
      */
     Coseno.prototype.evaluar = function (valorIntroducido) {
-        return this.amplitud * Math.cos(2 * Math.PI * (valorIntroducido - this.desfase) / this.periodo);
+        return this.amplitud * Math.cos(2 * Math.PI * valorIntroducido / this.periodo);
     };
     /**
      * Devuelve una representación gráfica de la función coseno.
@@ -85,17 +85,17 @@ var Coseno = /** @class */ (function (_super) {
     Coseno.prototype.representarFuncion = function (canvas, context) {
         var width = canvas.width;
         var height = canvas.height;
-        var scaleX = 100 / (2 * Math.PI);
-        var scaleY = 100 / 2;
+        var ESCALA_X = 100 / (2 * Math.PI);
+        var ESCALA_Y = 100 / 2;
         context.beginPath();
-        for (var x = 0; x <= width; x++) {
-            var valorX = x / scaleX + this.desfase;
-            var valorY = this.evaluar(valorX) * scaleY + height / 2;
-            if (x === 0) {
-                context.moveTo(x, valorY);
+        for (var CoordenadaX = 0; CoordenadaX <= width; CoordenadaX++) {
+            var valorX = CoordenadaX / ESCALA_X + this.desfase;
+            var valorY = this.evaluar(valorX) * ESCALA_Y + height / 2;
+            if (CoordenadaX === 0) {
+                context.moveTo(CoordenadaX, valorY);
             }
             else {
-                context.lineTo(x, valorY);
+                context.lineTo(CoordenadaX, valorY);
             }
         }
         context.stroke();

@@ -27,6 +27,7 @@ var Funciones = /** @class */ (function () {
      * @param {CanvasRenderingContext2D} context - Contexto 2D del canvas.
      */
     Funciones.prototype.representarFuncion = function (canvas, context) {
+        return;
     };
     return Funciones;
 }());
